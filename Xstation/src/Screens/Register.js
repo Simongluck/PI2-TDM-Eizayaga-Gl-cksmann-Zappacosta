@@ -36,7 +36,7 @@ function Register({ navigation }) {
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text>Ir al Login</Text>
+                <Text>Ya tengo cuenta</Text>
             </Pressable>
         </View>
     )
