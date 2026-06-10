@@ -28,6 +28,7 @@ function Login({ navigation }) {
             <Pressable onPress={() => onSubmit()}>
                 <Text>Iniciar sesión</Text>
             </Pressable>
+             
 
             <Pressable onPress={() => navigation.navigate("Register")}>
                 <Text>No tengo cuenta</Text>
