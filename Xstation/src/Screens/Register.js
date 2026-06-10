@@ -24,7 +24,7 @@ function Register({ navigation }) {
     }
 
     return (
-        <View>
+        <View style={{ padding: 20 }}>
             <Text>Registro</Text>
 
             <TextInput keyboardType="default" placeholder="username" onChangeText={text => setUsername(text)} value={username} />

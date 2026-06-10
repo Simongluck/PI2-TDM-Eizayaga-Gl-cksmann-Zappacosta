@@ -19,7 +19,7 @@ function Login({ navigation }) {
     }
 
     return (
-        <View>
+        <View style={{ padding: 20 }}>
             <Text>Login</Text>
 
             <TextInput keyboardType="email-address" placeholder="email" onChangeText={text => setEmail(text)} value={email} />
