@@ -34,31 +34,48 @@ function Home({ navigation }) {
 
     function handleLike(post) {
 
-        let likes = post.data.likes || [];
+        let likes = [];
+
+        if (post.data.likes) {
+            likes = post.data.likes;
+        }
 
         const userEmail = auth.currentUser.email;
 
         if (likes.includes(userEmail)) {
 
-            likes = likes.filter(
-                email => email !== userEmail
-            );
+            let nuevosLikes = [];
+
+            likes.forEach((email) => {
+
+                if (email !== userEmail) {
+                    nuevosLikes.push(email);
+                }
+
+            });
+
+            db.collection("posts")
+                .doc(post.id)
+                .update({
+                    likes: nuevosLikes
+                });
 
         } else {
 
             likes.push(userEmail);
 
-        }
+            db.collection("posts")
+                .doc(post.id)
+                .update({
+                    likes: likes
+                });
 
-        db.collection("posts")
-            .doc(post.id)
-            .update({
-                likes: likes
-            });
+        }
 
     }
 
     return (
+
         <View style={{ flex: 1 }}>
 
             <FlatList
@@ -71,6 +88,21 @@ function Home({ navigation }) {
                     if (item.data.likes) {
                         cantidadLikes = item.data.likes.length;
                     }
+
+                    let imagen =
+                        item.data.imagen !== ""
+                            ? (
+                                <Image
+                                    source={{
+                                        uri: item.data.imagen
+                                    }}
+                                    style={{
+                                        width: 300,
+                                        height: 300
+                                    }}
+                                />
+                            )
+                            : null;
 
                     return (
 
@@ -90,17 +122,7 @@ function Home({ navigation }) {
                                 {item.data.descripcion}
                             </Text>
 
-                            {item.data.imagen !== "" && (
-                                <Image
-                                    source={{
-                                        uri: item.data.imagen
-                                    }}
-                                    style={{
-                                        width: 300,
-                                        height: 300
-                                    }}
-                                />
-                            )}
+                            {imagen}
 
                             <Text>
                                 Likes: {cantidadLikes}
@@ -117,7 +139,7 @@ function Home({ navigation }) {
                             <Pressable
                                 onPress={() =>
                                     navigation.navigate(
-                                        "Comments",
+                                        "Comentarios",
                                         {
                                             postId: item.id
                                         }
@@ -137,6 +159,7 @@ function Home({ navigation }) {
             />
 
         </View>
+
     );
 
 }
