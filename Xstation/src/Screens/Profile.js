@@ -12,7 +12,6 @@ return(
         <Text>Nombre del Usuario</Text>
         <Text> EMAIL </Text>
 
-        <Text>FOTO</Text>
         <Text>Posteos del Usuario</Text>
 
         <Pressable onPress={()=>navigation.navigate("Login")}><Text>Cerrar Sesión</Text></Pressable>
