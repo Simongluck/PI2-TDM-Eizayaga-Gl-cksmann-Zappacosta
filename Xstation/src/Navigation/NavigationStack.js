@@ -1,26 +1,24 @@
 import React from "react";
-import {NavigationContainer} from "@react-navigation/native";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../Screens/Login";
+import NavigationTabs from "./NavigationTabs";
 import Register from "../Screens/Register";
-import NavigationTabs from './NavigationTabs';
-
 
 const Stack = createNativeStackNavigator();
 
 function NavigationStack() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Login" options={{ headerShown: false }} component={Login} />
 
-            <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="Register" options={{ headerShown: false }} component={Register} />
 
-            <Stack.Screen
-          name="NavTab"
-          component={NavigationTabs}
-        />
+                <Stack.Screen name="NavigationTabs" options={{ headerShown: false }} component={NavigationTabs} />
 
-        </Stack.Navigator>
+            </Stack.Navigator>
+        </NavigationContainer>
     )
 }
 
