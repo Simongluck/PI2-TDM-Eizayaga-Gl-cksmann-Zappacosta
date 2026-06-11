@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, TextInput, StyleSheet } from "react-native";
 import { auth, db } from "../firebase/config";
 
@@ -6,6 +6,14 @@ function Login({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loginError, setLoginError] = useState("")
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigation.navigate('NavigationTabs', { screen: "Home" })
+            }
+        })
+    }, [])
 
     function onSubmit() {
         auth.signInWithEmailAndPassword(email, password)
@@ -22,29 +30,29 @@ function Login({ navigation }) {
         <View style={styles.container}>
             <Text style={styles.titulo}>Login</Text>
 
-            <TextInput 
+            <TextInput
                 style={styles.input}
-                keyboardType="email-address" 
-                placeholder="email" 
-                onChangeText={text => setEmail(text)} 
-                value={email} 
+                keyboardType="email-address"
+                placeholder="email"
+                onChangeText={text => setEmail(text)}
+                value={email}
             />
 
-            <TextInput 
+            <TextInput
                 style={styles.input}
-                keyboardType="default" 
-                placeholder="contraseña" 
-                secureTextEntry={true} 
-                onChangeText={text => setPassword(text)} 
-                value={password} 
+                keyboardType="default"
+                placeholder="contraseña"
+                secureTextEntry={true}
+                onChangeText={text => setPassword(text)}
+                value={password}
             />
-            
+
             {loginError !== "" && <Text style={styles.errorText}>{loginError}</Text>}
-            
+
             <Pressable style={styles.botonPrimario} onPress={() => onSubmit()}>
                 <Text style={styles.botonLogin}>Iniciar sesión</Text>
             </Pressable>
-             
+
             <Pressable style={styles.noTengoCuenta} onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.linkTexto}>No tengo cuenta</Text>
             </Pressable>
@@ -55,14 +63,14 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0B0F19", 
+        backgroundColor: "#0B0F19",
         justifyContent: "center",
         padding: "10%",
     },
     titulo: {
         fontSize: "32px",
         fontWeight: "bold",
-        color: "white", 
+        color: "white",
         textAlign: "center",
         marginBottom: "40px",
     },
